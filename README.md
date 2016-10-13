@@ -888,13 +888,13 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 [ico-version]: https://img.shields.io/packagist/v/hawkbit/hawkbit.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/hawkbit/hawkbit/master.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/HawkBitPhp/hawkbit/master.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/hawkbit/hawkbit.svg?style=flat-square
-[ico-coveralls]: https://img.shields.io/coveralls/hawkbit/hawkbit/master.svg?style=flat-square)](https://coveralls.io/github/hawkbit/hawkbit?branch=1.0.x-dev
+[ico-coveralls]: https://img.shields.io/coveralls/HawkBitPhp/hawkbit/master.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/hawkbit/hawkbit
-[link-travis]: https://travis-ci.org/hawkbit/hawkbit
+[link-travis]: https://travis-ci.org/HawkBitPhp/hawkbit
 [link-downloads]: https://packagist.org/packages/hawkbit/hawkbit
 [link-author]: https://github.com/mbunge
 [link-contributors]: ../../contributors
-[link-coveralls]: https://coveralls.io/github/hawkbit/hawkbit
+[link-coveralls]: https://coveralls.io/github/HawkBitPhp/hawkbit
