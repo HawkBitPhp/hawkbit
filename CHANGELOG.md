@@ -1,5 +1,19 @@
 # Hawkbit Changelog
 
+## 2.3.0
+
+## Added
+
+ - Add basic usage example
+ 
+## Altered
+ 
+ - Add official league/route 3.0 support
+ 
+## Fixed
+
+ - Fix #29, #30
+
 ## 2.2.0
 
 ## Added

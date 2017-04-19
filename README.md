@@ -18,6 +18,10 @@ Hawkbit\Application uses latest versions of [League\Route](https://github.com/th
 
 Hawkbit\Application is an advanced derivate of [Proton](https://github.com/alexbilbie/Proton) and part of Hawkbit\Application Component collection by Marco Bunge. Hawkbit\Application 1.x is also known as Blast Hawkbit\Application.
 
+### Quick start
+
+Please see [public/](public/) for example usage and read documentation.
+
 ### Integrations
 
 Hawkbit\Application delivers also optional packages:
@@ -77,7 +81,7 @@ Create a new app
 
 require __DIR__.'/../vendor/autoload.php';
 
-$app = new \Hawkbit\Application\Application();
+$app = new \Hawkbit\Application();
 ```
 
 Create a new app with configuration
@@ -88,7 +92,7 @@ Create a new app with configuration
 $config = [
     'key' => 'value'
 ];
-$app = new \Hawkbit\Application\Application($config);
+$app = new \Hawkbit\Application($config);
 ```
 
 Add routes
@@ -96,7 +100,7 @@ Add routes
 ```php
 <?php
 
-/** @var Hawkbit\Application\Application $app */
+/** @var Hawkbit\Application $app */
 $app->get('/', function ($request, $response) {
     $response->getBody()->write('<h1>It works!</h1>');
     return $response;
@@ -171,7 +175,7 @@ Hawkbit\Application middlewares allows advanced control of lifecycle execution.
 $app->addMiddleware(new Acme\SomeMiddleware);
 ```
 
-Hawkbit\Application uses it's own runner `Hawkbit\Application\Application\MiddelwareRunner`
+Hawkbit\Application uses it's own runner `Hawkbit\Application\MiddelwareRunner`
 
 ## Routing
 
@@ -225,7 +229,7 @@ Basic usage with controllers:
 
 require __DIR__.'/../vendor/autoload.php';
 
-$app = new Hawkbit\Application\Application();
+$app = new Hawkbit\Application();
 
 $app->get('/', 'HomeController::index'); // calls index method on HomeController class
 
@@ -259,7 +263,7 @@ Automatic constructor injection of controllers:
 
 require __DIR__.'/../vendor/autoload.php';
 
-$app = new Hawkbit\Application\Application();
+$app = new Hawkbit\Application();
 
 $app->getContainer()->add('CustomService', new CustomService);
 $app->get('/', 'HomeController::index'); // calls index method on HomeController class
@@ -332,7 +336,7 @@ $app->group('/admin', function (\League\Route\RouteGroup $route) {
 #### Available vars
 
 - `$route` - `\League\Route\RouteGroup`
-- `$this` - `\Hawkbit\Application\Application`
+- `$this` - `\Hawkbit\Application`
 
 ## Middleware integrations
 
@@ -346,7 +350,7 @@ Basic usage with StackPHP (using `Stack\Builder` and `Stack\Run`):
 // index.php
 require __DIR__.'/../vendor/autoload.php';
 
-$app = new Hawkbit\Application\Application();
+$app = new Hawkbit\Application();
 
 $app->get('/', function ($request, $response) {
     $response->setContent('<h1>Hello World</h1>');
@@ -373,7 +377,7 @@ Basic usage with Stratigility (using `Zend\Stratigility\MiddlewarePipe`):
 
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\ServerRequestFactory;
-use Hawkbit\Application\Application;
+use Hawkbit\Application;
 use Hawkbit\Application\Stratigility\MiddlewarePipeAdapter;
 
 $application = new Application();
@@ -448,14 +452,14 @@ For more information about channels read this guide - [https://github.com/Seldae
 ## Events
 
 You can intercept requests and responses at seven points during the lifecycle. You can manipulate Request, Response and 
-ErrorResponse via `Hawkbit\Application\ApplicationEvent`.
+ErrorResponse via `Hawkbit\ApplicationEvent`.
 
 ### Application event
 
 ```php
 <?php
 
-/** @var \Hawkbit\Application\Application\ApplicationEvent $event */
+/** @var \Hawkbit\Application\ApplicationEvent $event */
 
 // custom params
 $event->getParamCollection(); // returns a mutable \ArrayObject
@@ -470,7 +474,7 @@ $event->getApplication();
 ```php
 <?php
 
-$app->addListener($app::EVENT_REQUEST_RECEIVED, function (\Hawkbit\Application\Application\ApplicationEvent $event) {
+$app->addListener($app::EVENT_REQUEST_RECEIVED, function (\Hawkbit\Application\ApplicationEvent $event) {
     $request = $event->getRequest();
     
     // manipulate $request
@@ -488,7 +492,7 @@ This event is fired when a request is received but before it has been processed 
 ```php
 <?php
 
-$app->addListener($app::EVENT_RESPONSE_CREATED, function (\Hawkbit\Application\Application\ApplicationEvent $event) {
+$app->addListener($app::EVENT_RESPONSE_CREATED, function (\Hawkbit\Application\ApplicationEvent $event) {
     $request = $event->getRequest();
     $response = $event->getResponse();
         
@@ -508,7 +512,7 @@ This event is fired when a response has been created but before it has been outp
 ```php
 <?php
 
-$app->addListener($app::EVENT_RESPONSE_SENT, function (\Hawkbit\Application\Application\ApplicationEvent $event) {
+$app->addListener($app::EVENT_RESPONSE_SENT, function (\Hawkbit\Application\ApplicationEvent $event) {
     $request = $event->getRequest();
     $response = $event->getResponse();
     
@@ -526,7 +530,7 @@ This event is fired when a response has been output and before the application l
 ```php
 <?php
 
-$app->addListener($app::EVENT_RUNTIME_ERROR, function (\Hawkbit\Application\Application\ApplicationEvent $event, $exception) use ($app) {
+$app->addListener($app::EVENT_RUNTIME_ERROR, function (\Hawkbit\Application\ApplicationEvent $event, $exception) use ($app) {
     //process exception
 });
 ```
@@ -542,7 +546,7 @@ This event is always fired when an error occurs.
 ```php
 <?php
 
-$app->addListener($app::EVENT_LIFECYCLE_ERROR, function (\Hawkbit\Application\Application\ApplicationEvent $event, \Exception $exception) {
+$app->addListener($app::EVENT_LIFECYCLE_ERROR, function (\Hawkbit\Application\ApplicationEvent $event, \Exception $exception) {
     $errorResponse = $event->getErrorResponse();
  
     //manipulate error response and process exception
@@ -561,7 +565,7 @@ This event is fired after runtime.error
 ```php
 <?php
 
-$app->addListener($app::EVENT_LIFECYCLE_COMPLETE, function (\Hawkbit\Application\Application\ApplicationEvent $event) {
+$app->addListener($app::EVENT_LIFECYCLE_COMPLETE, function (\Hawkbit\Application\ApplicationEvent $event) {
     // access the request using $event->getRequest()
     // access the response using $event->getResponse()
 });
@@ -574,7 +578,7 @@ This event is fired when a response has been output and before the application l
 ```php
 <?php
 
-$app->addListener($app::EVENT_SHUTDOWN, function (\Hawkbit\Application\Application\ApplicationEvent $event, $response, $terminatedOutputBuffers = []) {
+$app->addListener($app::EVENT_SHUTDOWN, function (\Hawkbit\Application\ApplicationEvent $event, $response, $terminatedOutputBuffers = []) {
     // access the response using $event->getResponse()
     // access terminated output buffer contents
     // or force application exit()
@@ -612,7 +616,7 @@ You can bind singleton objects into the container from the main application obje
 
 ```php
 <?php
-/** @var Hawkbit\Application\Application $app */
+/** @var Hawkbit\Application $app */
 $app['db'] = function () use($app) {
     $config = $app->getConfig('database');
     $manager = new Illuminate\Database\Capsule\Manager;
@@ -637,7 +641,7 @@ or by container access:
 
 ```php
 <?php
-/** @var Hawkbit\Application\Application $app */
+/** @var Hawkbit\Application $app */
 $app->getContainer()->share('db', function () use($app) {
     $config = $app->getConfig('database');
     $manager = new Illuminate\Database\Capsule\Manager;
