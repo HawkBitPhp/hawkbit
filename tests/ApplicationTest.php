@@ -14,6 +14,7 @@ namespace Hawkbit\Tests;
 use Hawkbit\Application;
 use League\Container\Container;
 use League\Event\Emitter;
+use League\Route\Http\Exception\NotFoundException;
 use League\Route\RouteCollection;
 use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface;
@@ -515,26 +516,37 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         });
 
         //Fake globals
+        $tmpServer = $_SERVER;
         $_SERVER['PHP_SELF'] = '/someProject/public/index.php';
         $_SERVER['REQUEST_URI'] = '/someProject/public/';
 
         $response = $app->handle($app->getRequest());
         $this->assertEquals('<h1>HELLO</h1>', $response->getBody()->__toString());
         $this->assertEquals('text/html', $app->getContentType());
+        $_SERVER = $tmpServer;
     }
     public function testExampleRequestWithoutPublicAsDocumentRoot(){
         $app = new Application();
-        $app->get('/test', function (ServerRequestInterface $request, ResponseInterface $response) {
+
+        $app->get('/', function (ServerRequestInterface $request, ResponseInterface $response) {
             $response->getBody()->write('<h1>HELLO</h1>');
             return $response;
         });
 
+        $app->get('/foo/bar', function (ServerRequestInterface $request, ResponseInterface $response) {
+            $response->getBody()->write('<h1>HELLO</h1>');
+            return $response;
+        });
+        $tmpServer = $_SERVER;
         //Fake globals
-        $_SERVER['PHP_SELF'] = '/someProject/public/index.php';
-        $_SERVER['REQUEST_URI'] = '/someProject/public/test';
+        $_SERVER['PHP_SELF'] = '/someProject/public/index.php/foo/bar';
+        $_SERVER['REQUEST_URI'] = '/someProject/public/index.php/foo/bar';
 
-        $response = $app->handle($app->getRequest());
+        $request = $app->getRequest();
+        $response = $app->handle($request);
+
         $this->assertEquals('<h1>HELLO</h1>', $response->getBody()->__toString());
         $this->assertEquals('text/html', $app->getContentType());
+        $_SERVER = $tmpServer;
     }
 }

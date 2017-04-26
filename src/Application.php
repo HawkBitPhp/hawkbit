@@ -182,10 +182,10 @@ final class Application extends AbstractApplication
                  * If there is some string before /index.php then remove this string from REQUEST_URI
                  */
                 if(false !== $beforeIndexPosition && $beforeIndexPosition > 0){
-                    $scriptUrl = str_replace('/index.php','',$_SERVER['PHP_SELF']);
-                    $_SERVER['REQUEST_URI'] = str_replace($scriptUrl,'',$_SERVER['REQUEST_URI']);
+                    $scriptUrl =  substr($_SERVER['PHP_SELF'],0,$beforeIndexPosition);
+                    $_SERVER['REQUEST_URI'] = str_replace(['/index.php',$scriptUrl],'',$_SERVER['REQUEST_URI']);
                 }
-                return  ServerRequestFactory::fromGlobals()->withHeader('content-type', $this->getContentType());;
+                return  ServerRequestFactory::fromGlobals()->withHeader('content-type', $this->getContentType());
             });
         }
 
