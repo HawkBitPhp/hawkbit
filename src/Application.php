@@ -176,7 +176,17 @@ final class Application extends AbstractApplication
     public function getRequest()
     {
         if (!$this->getContainer()->has(ServerRequestInterface::class)) {
-            $this->getContainer()->share(ServerRequestInterface::class, ServerRequestFactory::fromGlobals()->withHeader('content-type', $this->getContentType()));
+            $this->getContainer()->share(ServerRequestInterface::class,function(){
+                $beforeIndexPosition = strpos($_SERVER['PHP_SELF'],'/index.php');
+                /**
+                 * If there is some string before /index.php then remove this string from REQUEST_URI
+                 */
+                if(false !== $beforeIndexPosition && $beforeIndexPosition > 0){
+                    $scriptUrl = str_replace('/index.php','',$_SERVER['PHP_SELF']);
+                    $_SERVER['REQUEST_URI'] = str_replace($scriptUrl,'',$_SERVER['REQUEST_URI']);
+                }
+                return  ServerRequestFactory::fromGlobals()->withHeader('content-type', $this->getContentType());;
+            });
         }
 
         /** @var ServerRequestInterface $request */
