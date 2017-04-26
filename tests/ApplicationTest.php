@@ -507,5 +507,34 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('application/json', $app->getContentType());
     }
 
+    public function testRootRequestWithoutPublicAsDocumentRoot(){
+        $app = new Application();
+        $app->get('/', function (ServerRequestInterface $request, ResponseInterface $response) {
+            $response->getBody()->write('<h1>HELLO</h1>');
+            return $response;
+        });
 
+        //Fake globals
+        $_SERVER['PHP_SELF'] = '/someProject/public/index.php';
+        $_SERVER['REQUEST_URI'] = '/someProject/public/';
+
+        $response = $app->handle($app->getRequest());
+        $this->assertEquals('<h1>HELLO</h1>', $response->getBody()->__toString());
+        $this->assertEquals('text/html', $app->getContentType());
+    }
+    public function testExampleRequestWithoutPublicAsDocumentRoot(){
+        $app = new Application();
+        $app->get('/test', function (ServerRequestInterface $request, ResponseInterface $response) {
+            $response->getBody()->write('<h1>HELLO</h1>');
+            return $response;
+        });
+
+        //Fake globals
+        $_SERVER['PHP_SELF'] = '/someProject/public/index.php';
+        $_SERVER['REQUEST_URI'] = '/someProject/public/test';
+
+        $response = $app->handle($app->getRequest());
+        $this->assertEquals('<h1>HELLO</h1>', $response->getBody()->__toString());
+        $this->assertEquals('text/html', $app->getContentType());
+    }
 }
