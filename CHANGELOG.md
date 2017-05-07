@@ -1,5 +1,11 @@
 # Hawkbit Changelog
 
+## 2.3.2
+
+### Fixed
+
+ - Fix issue #34. Bind closure always to application instance.
+
 ## 2.3.1
  
 ### Fixed
