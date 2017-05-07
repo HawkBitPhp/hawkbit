@@ -5,6 +5,7 @@
 ### Altered
 
  - Upgrade league/container to 2.4
+ - Upgrade zendframework/zend-diactoros to 1.4
 
 ## 2.3.1
  
