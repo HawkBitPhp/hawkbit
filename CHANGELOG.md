@@ -2,6 +2,10 @@
 
 ## 2.3.2
 
+### Fixed
+
+ - Fix issue #34. Bind closure always to application instance.
+
 ### Altered
 
  - Upgrade league/container to 2.4
