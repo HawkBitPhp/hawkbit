@@ -1,5 +1,11 @@
 # Hawkbit Changelog
 
+## 2.3.2
+
+### Altered
+
+ - Upgrade league/container to 2.4
+
 ## 2.3.1
  
 ### Fixed

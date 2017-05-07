@@ -28,7 +28,7 @@
     "php": ">=5.5.9",
     "filp/whoops": "^2.1",
     "league/route": "~3.0",
-    "league/container": "^2.2",
+    "league/container": "^2.4",
     "league/event": "^2.1",
     "league/climate": "^3.2",
     "monolog/monolog": "^1.22",
