@@ -1,9 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: marco.bunge
- * Date: 03.11.2016
- * Time: 08:54
+ * The Hawkbit Micro Framework. An advanced derivate of Proton Micro Framework
+ *
+ * @author Marco Bunge <marco_bunge@web.de>
+ * @author Daniyal Hamid (@Designcise) <hello@designcise.com>
+ * @copyright Marco Bunge <marco_bunge@web.de>
+ *
+ * @license MIT
  */
 
 namespace Hawkbit\Application;
@@ -374,7 +377,7 @@ abstract class AbstractApplication implements ApplicationInterface, ContainerAwa
     protected function bindClosureToInstance($closure, $instance)
     {
         if ($closure instanceof \Closure) {
-            \Closure::bind($closure, $instance, get_class($instance));
+            $closure = $closure->bind($closure, $instance, get_class($instance));
         }
 
         return $closure;
