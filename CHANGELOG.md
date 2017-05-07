@@ -6,6 +6,12 @@
 
  - Fix issue #34. Bind closure always to application instance.
 
+### Altered
+
+ - Upgrade league/container to 2.4
+ - Upgrade zendframework/zend-diactoros to 1.4
+ - Update container implementation to psr 11
+
 ## 2.3.1
  
 ### Fixed
