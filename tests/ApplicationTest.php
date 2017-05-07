@@ -29,13 +29,29 @@ use Zend\Diactoros\ServerRequestFactory;
 
 class ApplicationTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     *
-     */
-    protected function tearDown()
+    public function testAppInstanceAccessInClosure()
     {
-        restore_error_handler();
-        restore_exception_handler();
+
+        $app = new Application(true);
+
+        $appInstanceInClosure = false;
+
+        $app->get(
+            '/',
+            function (ServerRequestInterface $request, ResponseInterface $response, array $args = [])
+            use(&$appInstanceInClosure){
+                $that = $this;
+                $appInstanceInClosure = $this instanceof Application\ApplicationInterface;
+                return $response;
+            }
+        );
+
+        $request = ServerRequestFactory::fromGlobals();
+        $response = $app->handle($request);
+
+        $this->assertTrue($appInstanceInClosure);
+        $this->assertEquals(200, $response->getStatusCode());
+
     }
 
 
@@ -508,7 +524,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('application/json', $app->getContentType());
     }
 
-    public function testRootRequestWithoutPublicAsDocumentRoot(){
+    public function testRootRequestWithoutPublicAsDocumentRoot()
+    {
         $app = new Application();
         $app->get('/', function (ServerRequestInterface $request, ResponseInterface $response) {
             $response->getBody()->write('<h1>HELLO</h1>');
@@ -525,7 +542,9 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('text/html', $app->getContentType());
         $_SERVER = $tmpServer;
     }
-    public function testExampleRequestWithoutPublicAsDocumentRoot(){
+
+    public function testExampleRequestWithoutPublicAsDocumentRoot()
+    {
         $app = new Application();
 
         $app->get('/', function (ServerRequestInterface $request, ResponseInterface $response) {
@@ -549,4 +568,15 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('text/html', $app->getContentType());
         $_SERVER = $tmpServer;
     }
+
+    /**
+     *
+     */
+    protected function tearDown()
+    {
+        restore_error_handler();
+        restore_exception_handler();
+    }
+
+
 }
