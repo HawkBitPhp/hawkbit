@@ -26,9 +26,10 @@ class MiddlewareAdapterTest extends \PHPUnit_Framework_TestCase
         $handleRoute = false;
         $handleMiddleware = false;
         $application = new Application();
-        $application->get('/', function ($request, ResponseInterface $response) use(&$handleRoute) {
-            $this->assertInstanceOf(ServerRequestInterface::class, $request);
-            $this->assertInstanceOf(ResponseInterface::class, $response);
+        $testCase = $this;
+        $application->get('/', function ($request, ResponseInterface $response) use(&$handleRoute, $testCase) {
+            $testCase->assertInstanceOf(ServerRequestInterface::class, $request);
+            $testCase->assertInstanceOf(ResponseInterface::class, $response);
             $response->getBody()->write('Hello World');
             $handleRoute = true;
             return $response;
