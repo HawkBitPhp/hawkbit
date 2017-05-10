@@ -40,7 +40,7 @@ Hawkbit\Application delivers also optional packages:
 >
 > At the moment I design and develop all Hawkbit packages and manage the whole codebase. I would be appreciate for support or even better: for contributors!
 
-Please refer to Issue #33 for details.
+Please refer to [Issue #33](https://github.com/HawkBitPhp/hawkbit/issues/33) for details.
 
 ## Special thanks
 
