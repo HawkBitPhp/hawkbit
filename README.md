@@ -30,6 +30,16 @@ Hawkbit\Application delivers also optional packages:
  - Doctrine ORM Wrapper: [`hawkbit/doctrine`](https://github.com/HawkBitPhp/hawkbit-doctrine)
  - Plates View Engine: [`hawkbit/presentation`](https://github.com/HawkBitPhp/hawkbit-presentation)
 
+## Motivation
+
+> My vision is to provide a micro framework which is able to handle HTTP and CLI in the same fashion.he developer should be able to reuse it's code, design it's business layer be his needs. Hawkbit should be a supporting tool instead of predefined framework. And yes it is under active development.
+>
+> I love PSR, phpleague und in minimal set of dependecies and want to create I micro framework which is used the best packages out there bundeld in a nice application layer. I'm also love the style of component-based development.
+>
+> Hawkbit is built on top phpleague packages and keep PSR in mind. Hawkbit is designed to co-exist whith your code instead of replace code base. Hawkbit does has a small dependency footprint. Last but not least Hawkbit does not force the developer how to design the application bussiness logic, since we prefer to use POPO's for Controllers / Commands (the accessor to bussiness logic).
+>
+> At the moment I design and develop all Hawkbit packages and manage the whole codebase. I would be appreciate for support or even better contributors!
+
 ## Special thanks
 
 Thank you for PR, identifing Bus, or any other Improvements!
