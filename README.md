@@ -194,7 +194,7 @@ Hawkbit\Application middlewares allows advanced control of lifecycle execution.
 $app->addMiddleware(new Acme\SomeMiddleware);
 ```
 
-Hawkbit\Application uses it's own runner `Hawkbit\Application\MiddelwareRunner`
+Hawkbit\Application uses it's own runner `Hawkbit\Application\MiddlewareRunner`
 
 ## Routing
 
